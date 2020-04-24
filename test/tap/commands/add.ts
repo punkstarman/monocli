@@ -310,6 +310,12 @@ t.test(`add command`, async t => {
       );
 
       t.same(projectConfig, config, `project config`);
+
+      t.equals(
+        await monorepo.git(`status`, [`--porcelain`]),
+        ``,
+        `no files remaining to commit`
+      );
     });
   });
 });

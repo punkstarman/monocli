@@ -16,6 +16,7 @@ import { Repository } from "../models/git";
 import { output } from "../utils/log";
 import { confirm } from "../utils/prompt";
 import { SubProjectConfig } from "../models/config";
+import { Monorepo } from "../models/monorepo";
 
 export type AddCmdUrls = {
   remote: string;
@@ -132,8 +133,10 @@ Behavior depends on what the <path> directory contains and if you provided an [u
 
     await this.monorepo.addProjectConfig(config);
 
+    await this.monorepo.repository.git(`add`, [Monorepo.CONFIG_FILE_NAME]);
+
     await this.monorepo.repository.git(`commit`, [
-      `-am`,
+      `-m`,
       `build: add monocli config for ${directory}`
     ]);
 
